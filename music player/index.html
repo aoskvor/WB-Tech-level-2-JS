@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player with Visualization</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="player-container">
+        <h1>Music Player</h1>
+        <div id="waveform"></div>
+        <audio id="audio" src=""></audio>
+        <div id="controls">
+            <button id="play-button">Play</button>
+            <button id="pause-button">Pause</button>
+            <input id="seek-bar" type="range" min="0" step="0.01">
+            <div>
+                <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+            </div>
+            <input id="volume-bar" type="range" min="0" max="1" step="0.1" value="1">
+            <select id="playlist" onchange="changeTrack()">
+                <option value="">Select a track</option>
+            </select>
+            <button id="add-track-button">Add Track</button>
+        </div>
+    </div>
+
+    <<div id="waveform">
+        <!-- the waveform will be rendered here -->
+      </div>
+      
+      <script type="module">
+      import WaveSurfer from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
+      
+      const wavesurfer = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#4F4A85',
+        progressColor: '#383351',
+        url: '/audio.mp3',
+      })
+      
+      wavesurfer.on('interaction', () => {
+        wavesurfer.play()
+      })
+      </script>
+          
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-gap: 1px;
+    background-color: #000;
+    width: 402px;
+  }
+  
+  .cell {
+    width: 40px;
+    height: 40px;
+    background-color: #888;
+  }
+  
+  .cell.active {
+    background-color: #333;
+  }
+  

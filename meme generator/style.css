@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Meme Generator</title>
+  <style>
+    #canvas-container {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+    }
+    #canvas-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 5px black;
+    }
+  </style>
+</head>
+<body>
+  <h1>Meme Generator</h1>
+
+  <div id="canvas-container">
+    <img id="uploaded-image" src="" alt="Uploaded Image" style="max-width: 100%; max-height: 100%;">
+    <div id="canvas-text"></div>
+  </div>
+
+  <form>
+    <input type="file" id="image-upload" accept="image/*">
+    <br>
+    <input type="text" id="text-input" placeholder="Enter text">
+    <br>
+    <button type="button" id="add-text-button">Add Text</button>
+    <button type="button" id="save-button">Save Meme</button>
+  </form>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const canvasContainer = document.getElementById('canvas-container');
+      const canvasText = document.getElementById('canvas-text');
+      const imageUpload = document.getElementById('image-upload');
+      const textInput = document.getElementById('text-input');
+      const addTextButton = document.getElementById('add-text-button');
+      const saveButton = document.getElementById('save-button');
+
+      imageUpload.addEventListener('change', () => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const image = new Image();
+          image.src = e.target.result;
+          image.onload = function() {
+            canvasContainer.innerHTML = '';
+            canvasContainer.appendChild(image);
+          };
+        };
+        reader.readAsDataURL(imageUpload.files[0]);
+      });
+
+      addTextButton.addEventListener('click', () => {
+        const newText = document.createElement('div');
+        newText.className = 'canvas-text';
+        newText.innerText = textInput.value;
+        canvasContainer.appendChild(newText);
+        textInput.value = '';
+      });
+
+      saveButton.addEventListener('click', () => {
+        html2canvas(canvasContainer).then(canvas => {
+          const link = document.createElement('a');
+          link.href = canvas.toDataURL();
+          link.download = 'meme.png';
+          link.click();
+        });
+      });
+    });
+  </script>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
